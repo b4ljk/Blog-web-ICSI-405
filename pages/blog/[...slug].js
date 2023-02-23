@@ -8,6 +8,8 @@ const DEFAULT_LAYOUT = 'PostLayout'
 
 export async function getStaticPaths() {
   const posts = getFiles('blog')
+  console.log('asdkjhagsbdka hsdjahs dkjahs dkajsh djkasjhdj')
+  console.log(posts)
   return {
     paths: posts.map((p) => ({
       params: {
@@ -36,7 +38,6 @@ export async function getStaticProps({ params }) {
     const rss = generateRss(allPosts)
     fs.writeFileSync('./public/feed.xml', rss)
   }
-
   return { props: { post, authorDetails, prev, next } }
 }
 
