@@ -9,6 +9,7 @@ export default function LoginButton() {
           src={session.user.image}
           className="h-8 w-8 cursor-pointer rounded-full"
           onClick={() => {}}
+          alt="profile picture"
         />
         <button className="font-bold text-cyan-500" onClick={() => signOut()}>
           Sign out
