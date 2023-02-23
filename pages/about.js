@@ -10,6 +10,8 @@ export async function getStaticProps() {
 
 export default function About({ authorDetails }) {
   const { mdxSource, frontMatter } = authorDetails
+  console.log(frontMatter)
+  console.log(mdxSource)
 
   return (
     <MDXLayoutRenderer

@@ -66,6 +66,16 @@ module.exports = withBundleAnalyzer({
       },
     ]
   },
+  images: {
+    domains: ['lh3.googleusercontent.com'],
+    formats: ['image/avif', 'image/webp'],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: '**.lh3.googleusercontent.com',
+      },
+    ],
+  },
   webpack: (config, { dev, isServer }) => {
     config.module.rules.push({
       test: /\.svg$/,
