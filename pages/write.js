@@ -3,6 +3,7 @@ import siteMetadata from '@/data/siteMetadata'
 import React, { useMemo, useState } from 'react'
 import dynamic from 'next/dynamic'
 import 'react-quill/dist/quill.snow.css'
+import htmlToMarkdown from '@/components/htmltomd'
 
 export default function Write() {
   const ReactQuill = useMemo(() => dynamic(() => import('react-quill'), { ssr: false }), [])
@@ -55,6 +56,15 @@ export default function Write() {
     'formula',
     'color',
   ]
+  console.log(htmlToMarkdown(value))
+  const downloadmd = () => {
+    const element = document.createElement('a')
+    const file = new Blob([htmlToMarkdown(value)], { type: 'text/plain' })
+    element.href = URL.createObjectURL(file)
+    element.download = 'file.md'
+    document.body.appendChild(element) // Required for this to work in FireFox
+    element.click()
+  }
 
   return (
     <div>
@@ -66,6 +76,7 @@ export default function Write() {
         value={value}
         onChange={setValue}
       />
+      <button onClick={downloadmd}>download</button>
     </div>
   )
 }

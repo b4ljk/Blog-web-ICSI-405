@@ -1,21 +1,21 @@
-import { remark } from 'remark'
-import remarkHtml from 'remark-html'
+import turndown from 'turndown'
 
-import rehypeParse from 'rehype-parse'
-import rehypeRemark from 'rehype-remark'
-import remarkStringify from 'remark-stringify'
+const turndownService = new turndown({
+  headingStyle: 'atx',
+  codeBlockStyle: 'fenced',
+  hr: '---',
+  bulletListMarker: '-',
+  emDelimiter: '*',
+  strongDelimiter: '**',
+  linkStyle: 'inlined',
+  linkReferenceStyle: 'full',
+  fence: '```',
+  useBR: false,
+  blankReplacement: function (content, node) {
+    return node.isBlock ? '\n\n' : ''
+  },
+})
 
-export function markdownToHtml(markdownText) {
-  const file = remark().use(remarkHtml).processSync(markdownText)
-  return String(file)
-}
-
-export function htmlToMarkdown(htmlText) {
-  const file = remark()
-    .use(rehypeParse, { emitParseErrors: true, duplicateAttribute: false })
-    .use(rehypeRemark)
-    .use(remarkStringify)
-    .processSync(htmlText)
-
-  return String(file)
+export default function htmlToMarkdown(html) {
+  return turndownService.turndown(html)
 }
