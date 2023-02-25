@@ -7,6 +7,7 @@ export default function LoginButton() {
   const router = useRouter()
   const isProfile = router.pathname === '/profile'
   if (session) {
+    console.log('session', session)
     return (
       <div className="flex gap-2">
         <img
