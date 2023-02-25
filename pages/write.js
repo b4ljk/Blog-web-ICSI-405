@@ -56,20 +56,36 @@ export default function Write() {
     'formula',
     'color',
   ]
-  console.log(value)
   // replace value if there is <pre> tag
   const replaceValue = value
     .replace(/<pre class="ql-syntax" spellcheck="false">/g, '<pre><code>')
     .replace(/<\/pre>/g, '</code></pre>')
-  console.log(htmlToMarkdown(replaceValue))
+
   const downloadmd = () => {
     const element = document.createElement('a')
-    const file = new Blob([htmlToMarkdown(value)], { type: 'text/plain' })
+    const file = new Blob([htmlToMarkdown(replaceValue)], { type: 'text/plain' })
     element.href = URL.createObjectURL(file)
     element.download = 'file.md'
     document.body.appendChild(element) // Required for this to work in FireFox
     element.click()
   }
+
+  // when leaving page, save to local storage
+  React.useEffect(() => {
+    const data = localStorage.getItem('content')
+    if (data) {
+      setValue(data)
+    }
+  }, [])
+
+  React.useEffect(() => {
+    console.count('render')
+    localStorage.setItem('content', value)
+    return () => {
+      console.count('unmount')
+      localStorage.removeItem('content')
+    }
+  }, [value])
 
   return (
     <div>
