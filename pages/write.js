@@ -56,7 +56,12 @@ export default function Write() {
     'formula',
     'color',
   ]
-  console.log(htmlToMarkdown(value))
+  console.log(value)
+  // replace value if there is <pre> tag
+  const replaceValue = value
+    .replace(/<pre class="ql-syntax" spellcheck="false">/g, '<pre><code>')
+    .replace(/<\/pre>/g, '</code></pre>')
+  console.log(htmlToMarkdown(replaceValue))
   const downloadmd = () => {
     const element = document.createElement('a')
     const file = new Blob([htmlToMarkdown(value)], { type: 'text/plain' })
