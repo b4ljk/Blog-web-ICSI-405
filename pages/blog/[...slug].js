@@ -24,6 +24,7 @@ export async function getStaticProps({ params }) {
   const postIndex = allPosts.findIndex((post) => formatSlug(post.slug) === params.slug.join('/'))
   const prev = allPosts[postIndex + 1] || null
   const next = allPosts[postIndex - 1] || null
+  console.log(params)
   const post = await getFileBySlug('blog', params.slug.join('/'))
   const authorList = post.frontMatter.authors || ['default']
   const authorPromise = authorList.map(async (author) => {
@@ -42,7 +43,7 @@ export async function getStaticProps({ params }) {
 
 export default function Blog({ post, authorDetails, prev, next }) {
   const { mdxSource, toc, frontMatter } = post
-
+  // console.log('frontMatter', frontMatter, mdxSource, toc)
   return (
     <>
       {frontMatter.draft !== true ? (
