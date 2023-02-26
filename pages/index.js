@@ -6,12 +6,19 @@ import { getAllFilesFrontMatter } from '@/lib/mdx'
 import formatDate from '@/lib/utils/formatDate'
 
 import NewsletterForm from '@/components/NewsletterForm'
+import prisma from '@/lib/prisma'
 
 const MAX_DISPLAY = 5
 
 export async function getStaticProps() {
   const posts = await getAllFilesFrontMatter('blog')
-
+  const feed = await prisma.post.findMany({
+    take: MAX_DISPLAY,
+    orderBy: {
+      createdAt: 'desc',
+    },
+  })
+  console.log(feed)
   return { props: { posts } }
 }
 
@@ -29,7 +36,9 @@ export default function Home({ posts }) {
               onClick={() => {}}
               className="text-3xl font-extrabold leading-9 tracking-tight text-gray-900 dark:text-gray-100 sm:text-4xl sm:leading-10 md:text-6xl md:leading-14"
             >
-              <Link href="/write">Write</Link>
+              <Link href="/write" className="text-blue-400">
+                Write
+              </Link>
             </button>
           </div>
 
