@@ -20,6 +20,7 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params }) {
+  //! i think we have to change this in order to make site functioning and all nice
   const allPosts = await getAllFilesFrontMatter('blog')
   const postIndex = allPosts.findIndex((post) => formatSlug(post.slug) === params.slug.join('/'))
   const prev = allPosts[postIndex + 1] || null
