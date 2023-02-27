@@ -4,7 +4,7 @@ import React, { useMemo, useState } from 'react'
 import dynamic from 'next/dynamic'
 import 'react-quill/dist/quill.snow.css'
 import htmlToMarkdown from '@/components/htmltomd'
-
+import SimpleButton from '@/components/simpleButton'
 export default function Write() {
   const ReactQuill = useMemo(() => dynamic(() => import('react-quill'), { ssr: false }), [])
   const [value, setValue] = useState('')
@@ -82,6 +82,8 @@ export default function Write() {
     }
   }, [value])
 
+  const confirmWrite = () => {}
+
   return (
     <div>
       <PageSEO title={siteMetadata.title} description={siteMetadata.description} />
@@ -92,7 +94,7 @@ export default function Write() {
         value={value}
         onChange={onChange}
       />
-      {/* <button onClick={downloadmd}>download</button> */}
+      <SimpleButton className="bg-blue-400">idiot</SimpleButton>
     </div>
   )
 }
