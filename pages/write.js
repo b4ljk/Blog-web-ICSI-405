@@ -57,17 +57,14 @@ export default function Write() {
     'color',
   ]
   // replace value if there is <pre> tag
-  const replaceValue = value
-    .replace(/<pre class="ql-syntax" spellcheck="false">/g, '<pre><code>')
-    .replace(/<\/pre>/g, '</code></pre>')
 
-  const downloadmd = () => {
-    const element = document.createElement('a')
-    const file = new Blob([htmlToMarkdown(replaceValue)], { type: 'text/plain' })
-    element.href = URL.createObjectURL(file)
-    element.download = 'file.md'
-    document.body.appendChild(element) // Required for this to work in FireFox
-    element.click()
+  const onChange = (val) => {
+    setValue(val)
+    let replaceValue = value
+      .replace(/<pre class="ql-syntax" spellcheck="false">/g, '<pre><code>')
+      .replace(/<\/pre>/g, '</code></pre>')
+    replaceValue = htmlToMarkdown(replaceValue)
+    console.log(replaceValue)
   }
 
   // when leaving page, save to local storage
@@ -79,10 +76,8 @@ export default function Write() {
   }, [])
 
   React.useEffect(() => {
-    console.count('render')
     localStorage.setItem('content', value)
     return () => {
-      console.count('unmount')
       localStorage.removeItem('content')
     }
   }, [value])
@@ -95,9 +90,9 @@ export default function Write() {
         modules={modules}
         formats={formats}
         value={value}
-        onChange={setValue}
+        onChange={onChange}
       />
-      <button onClick={downloadmd}>download</button>
+      {/* <button onClick={downloadmd}>download</button> */}
     </div>
   )
 }
